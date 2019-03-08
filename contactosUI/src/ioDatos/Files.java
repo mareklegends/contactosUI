@@ -109,7 +109,6 @@ public class Files {
      
       
         
-        
         return  vContactos;
     }
     
@@ -126,7 +125,7 @@ public class Files {
           } catch (IOException ex) {
               System.out.println("Error al crear el archivo");
           }
-          
+        } 
             if (f.exists()) {
                 
               try {
@@ -151,7 +150,7 @@ public class Files {
                 
                 
             }
-        }
+        
       
     }
 }

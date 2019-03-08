@@ -23,15 +23,14 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
       //ioDatos.Files.rellenarContactos();
         vContactos = ioDatos.Files.cargarContactos();
-        
-        String datos="";
-        
+        this.setLocationRelativeTo(null);
+        String datos="";        
         for (Contactos vContacto : vContactos) {
-            datos+=">>"+vContacto.getNombre()+"-"+vContacto.getApellido1()+"-"+vContacto.getApellido2()+"-"+vContacto.getEstadocivil()+"-"+vContacto.getSexo()+"-"+vContacto.getEdad()+"\n";
+            datos+= ">>"+vContacto.getNombre()+"-"+vContacto.getApellido1()+"-"+vContacto.getApellido2()+"-"+vContacto.getEstadocivil()+"-"+vContacto.getSexo()+"-"+vContacto.getEdad()+"\n";
         }
-        
-        jTextAreaMostrarDatos.setEditable(false);
         jTextAreaMostrarDatos.setText(datos);
+        jTextAreaMostrarDatos.setEditable(false);
+        
         
     }
 
@@ -226,6 +225,7 @@ public class Dashboard extends javax.swing.JFrame {
         vContactos.add(c);
         
         ioDatos.Files.guardarContactos(vContactos);
+        System.out.println(vContactos.toString());
     }//GEN-LAST:event_jButtonGuardarMouseClicked
 
     private void jButtonSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSalirMouseClicked
