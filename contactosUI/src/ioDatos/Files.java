@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +23,45 @@ import java.util.logging.Logger;
  */
 public class Files {
     
-    public static void rellenarContactos(){
-        ArrayList<Contactos> vContactos = new ArrayList();
+   /* public static void rellenarContactos(){
+      File f = new File("contactos.dat");
+        FileOutputStream fo;
+          ObjectOutputStream oo;
+          
+          
+            if (!f.exists()) {
+          try {
+              f.createNewFile();
+          } catch (IOException ex) {
+              System.out.println("Error al crear el archivo");
+          }
+        }
+            
+            
+            
+        
+         if (f.exists()) {    
+            
+          
+        try {
+            fo = new FileOutputStream(f);
+            oo = new ObjectOutputStream(fo);
+            ArrayList<Contactos> v = new ArrayList<>();
+            v.add(new Contactos("marcos", "Omella", "Pellicer", "Soltero", "Masculino", "20"));
+               oo.writeObject(v);
+        oo.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+              Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+          }
+      
+      }
         
        
         
         
-    }
+    }*/
     
     
         
@@ -60,12 +93,13 @@ public class Files {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Fin de lectrua");
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
             } finally{
                 try {
-                    oi.close();
+                    if (oi!=null)
+                        oi.close();
                 } catch (IOException ex) {
                     System.out.println("Error al cerrar el archivo");
                 }
@@ -77,5 +111,47 @@ public class Files {
         
         
         return  vContactos;
+    }
+    
+   
+
+    public static void guardarContactos(ArrayList<Contactos> vContactos) {
+      File f = new File("contactos.dat");
+      FileOutputStream fo = null;
+      ObjectOutputStream oo = null;
+      
+        if (!f.exists()) {
+          try {
+              f.createNewFile();
+          } catch (IOException ex) {
+              System.out.println("Error al crear el archivo");
+          }
+          
+            if (f.exists()) {
+                
+              try {
+                  fo= new FileOutputStream(f);
+                  oo = new ObjectOutputStream(fo);
+                  
+                  for (Contactos vContacto : vContactos) {
+                      oo.writeObject(vContacto);
+                  }
+              } catch (FileNotFoundException ex) {
+                  System.out.println("Error al escribir en el archivo");
+   
+              } catch (IOException ex) {
+                  Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+              }finally{
+                  try {
+                      oo.close();
+                  } catch (IOException ex) {
+                      System.out.println("Error al cerrar el archivo");
+                  }
+              }
+                
+                
+            }
+        }
+      
     }
 }

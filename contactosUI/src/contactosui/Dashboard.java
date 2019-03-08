@@ -16,10 +16,23 @@ public class Dashboard extends javax.swing.JFrame {
     /**
      * Creates new form Dashboard
      */
+    
+    ArrayList<Contactos> vContactos;
+    
     public Dashboard() {
         initComponents();
+      //ioDatos.Files.rellenarContactos();
+        vContactos = ioDatos.Files.cargarContactos();
         
-        ArrayList<Contactos> vContactos = ioDatos.Files.cargarContactos();
+        String datos="";
+        
+        for (Contactos vContacto : vContactos) {
+            datos+=">>"+vContacto.getNombre()+"-"+vContacto.getApellido1()+"-"+vContacto.getApellido2()+"-"+vContacto.getEstadocivil()+"-"+vContacto.getSexo()+"-"+vContacto.getEdad()+"\n";
+        }
+        
+        jTextAreaMostrarDatos.setEditable(false);
+        jTextAreaMostrarDatos.setText(datos);
+        
     }
 
     /**
@@ -137,8 +150,18 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonGuardarMouseClicked(evt);
+            }
+        });
 
         jButtonSalir.setText("Salir");
+        jButtonSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSalirMouseClicked(evt);
+            }
+        });
 
         jTextAreaMostrarDatos.setColumns(20);
         jTextAreaMostrarDatos.setRows(5);
@@ -179,6 +202,36 @@ public class Dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarMouseClicked
+        // TODO add your handling code here:
+        
+        String nombre = jTextFieldNombre.getText();
+        String apellido1 = jTextFieldApellido1.getText();
+        String apellido2 = jTextFieldApellido2.getText();
+        String estadocivil = (String) jComboBoxEstadoCivil.getSelectedItem();
+        
+        String sexo = "";
+        
+        if (jRadioButtonMasculino.isSelected()) {
+            sexo="Masculino";
+        }else{
+             sexo="Femenino";
+        }
+        int edadnumero = (int) jSpinnerEdad.getValue();
+        String edad = Integer.toString(edadnumero);
+        
+        Contactos c = new Contactos(nombre, apellido1, apellido2, estadocivil, sexo, edad);
+        
+        vContactos.add(c);
+        
+        ioDatos.Files.guardarContactos(vContactos);
+    }//GEN-LAST:event_jButtonGuardarMouseClicked
+
+    private void jButtonSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSalirMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButtonSalirMouseClicked
 
     /**
      * @param args the command line arguments
